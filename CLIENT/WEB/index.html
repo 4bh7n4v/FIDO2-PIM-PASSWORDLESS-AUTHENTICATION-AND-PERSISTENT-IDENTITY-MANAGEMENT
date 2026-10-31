@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PIM Chat</title>
+  <link rel="stylesheet" href="chat_style.css">
+</head>
+<body>
+
+<!-- ============================ sign-in / onboarding ============================ -->
+<main id="auth-view" class="auth-wrap">
+  <div class="auth-card">
+    <h1>PIM Chat</h1>
+    <p class="subtitle">Messaging with FIDO2 + TPM protected identity</p>
+
+    <form id="panel-login" class="panel" autocomplete="on">
+      <h2>Log in</h2>
+      <label>Username<input id="login-username" autocomplete="username" required></label>
+      <label>Password<input id="login-password" type="password" autocomplete="current-password" required></label>
+      <button class="primary" type="submit">Continue</button>
+      <p class="switch">New here? <a href="#" data-goto="register">Create an account</a></p>
+    </form>
+
+    <form id="panel-register" class="panel" hidden autocomplete="off">
+      <h2>Create account</h2>
+      <label>Username<input id="reg-username" required minlength="3" maxlength="24"></label>
+      <label>Password (min. 8 characters)<input id="reg-password" type="password" required minlength="8"></label>
+      <label>Gmail address<input id="reg-email" type="email" required placeholder="name@gmail.com"></label>
+      <label>Phone number<input id="reg-phone" type="tel" required placeholder="+91 98765 43210"></label>
+      <button class="primary" type="submit">Send verification codes</button>
+      <p class="switch">Already registered? <a href="#" data-goto="login">Log in</a></p>
+    </form>
+
+    <form id="panel-otp" class="panel" hidden autocomplete="off">
+      <h2>Verify</h2>
+      <p id="otp-message" class="hint"></p>
+      <label>Code sent to your e-mail<input id="otp-email" inputmode="numeric" maxlength="6" required></label>
+      <label>Code sent to your phone<input id="otp-phone" inputmode="numeric" maxlength="6" required></label>
+      <div id="otp-demo" class="demo-box" hidden></div>
+      <button class="primary" type="submit">Verify codes</button>
+      <p class="switch"><a href="#" data-goto="login">Cancel</a></p>
+    </form>
+
+    <div id="panel-hello" class="panel" hidden>
+      <h2>Windows Hello</h2>
+      <p id="hello-message" class="hint"></p>
+      <button id="hello-button" class="primary" type="button">Continue with Windows Hello</button>
+      <p class="switch"><a href="#" data-goto="login">Cancel</a></p>
+    </div>
+
+    <p id="auth-error" class="error" hidden></p>
+    <p id="agent-status" class="agent-status"></p>
+  </div>
+</main>
+
+<!-- ================================= chat ================================= -->
+<div id="chat-view" class="chat-layout" hidden>
+  <header class="topbar">
+    <strong>PIM Chat</strong>
+    <span id="me-name" class="chip"></span>
+    <span id="device-chip" class="chip device"></span>
+    <span class="spacer"></span>
+    <button id="logout-button" class="ghost" type="button">Log out</button>
+  </header>
+
+  <aside class="sidebar">
+    <div class="search">
+      <input id="search-input" placeholder="Search users to chat with…" autocomplete="off">
+      <div id="search-results" class="search-results" hidden></div>
+    </div>
+    <nav class="tabs">
+      <button data-tab="chats" class="tab active">Chats</button>
+      <button data-tab="review" class="tab">Review <span id="review-badge" class="badge" hidden></span></button>
+      <button data-tab="blocked" class="tab">Blocked</button>
+    </nav>
+    <div id="tab-chats" class="tab-body"></div>
+    <div id="tab-review" class="tab-body" hidden></div>
+    <div id="tab-blocked" class="tab-body" hidden></div>
+  </aside>
+
+  <section class="main-pane">
+    <div id="empty-state" class="empty">Select a chat or search for someone to start talking.</div>
+    <div id="thread-view" hidden>
+      <div class="thread-head">
+        <strong id="thread-title"></strong>
+        <span class="spacer"></span>
+        <span id="thread-actions"></span>
+      </div>
+      <div id="thread-messages" class="messages"></div>
+      <form id="composer" class="composer">
+        <input id="composer-input" placeholder="Write a message…" autocomplete="off" maxlength="2000">
+        <button class="primary" type="submit">Send</button>
+      </form>
+      <p id="composer-note" class="note" hidden></p>
+    </div>
+  </section>
+</div>
+
+<div id="toast" class="toast" hidden></div>
+<script src="webauthn_helpers.js"></script>
+<script src="chat_app.js"></script>
+</body>
+</html>

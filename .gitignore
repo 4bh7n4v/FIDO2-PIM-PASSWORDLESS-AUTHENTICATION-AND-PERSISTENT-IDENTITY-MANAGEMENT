@@ -1,0 +1,33 @@
+# --- Runtime data (contains e-mails, phone numbers, password hashes, TPM hashes) ---
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+/DATA/
+SERVER/DATA/*
+!SERVER/DATA/.gitkeep
+
+# Simulated TPM identities are generated per machine
+CLIENT/SIMULATED_TPM/*
+!CLIENT/SIMULATED_TPM/.gitkeep
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# --- Playwright / browser test output ---
+test-results/
+playwright-report/
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+desktop.ini
+.DS_Store
+.env
